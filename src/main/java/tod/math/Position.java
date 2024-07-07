@@ -4,7 +4,7 @@ public class Position{
 	int row;	
 	int col;	
 
-	Position(int _row, int _col){
+	public Position(int _row, int _col){
 		row = _row;
 		col = _col;
 	}
@@ -47,5 +47,11 @@ public class Position{
 	String to_string(){
 		String res = STR."vec(r = {\{this.row}}, c = {\{this.col}})";
 		return res;
+	}
+	public int getRow() {
+		return row;
+	}
+	public int getCol() {
+		return col;
 	}
 }

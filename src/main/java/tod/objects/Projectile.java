@@ -24,6 +24,6 @@ public class Projectile{
 		rColor = new Color(0,1,0);
 		rSized = new Sized(1,Constants.INITIAL_POSITION);
 		rCells = new Cell[1];
-		rCells[0] = new Cell('x',new Color(255,0,0)); // Color of projectile is red
+		rCells[0] = new Cell((byte)'x',new Color(255,0,0)); // Color of projectile is red
 	}
 };

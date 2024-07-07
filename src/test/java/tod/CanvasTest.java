@@ -1,21 +1,26 @@
 package tod;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
+import tod.engine.Canvas;
 import tod.engine.Framer;
+import tod.objects.Cell;
 import tod.objects.Tower;
 import org.junit.Test;
 
 public class CanvasTest{
 	@Test
 	public void CreateCanvas(){
-		PrintStream p = new PrintStream(System.out);
 		byte [] buf = new byte[100];
-		Framer f = new Framer();
+		Canvas c = new Canvas(buf);
 		Tower t = new Tower();
-		p.println("Creating framer");
-		f.frame(t.getCells(), buf);
-		p.write(buf, 0, buf.length);
+		c.placeCells(t.getCells(),t.getrSized());
+		Cell[] cells = c.getCells();
+		assertEquals(cells[0].text,t.getCells()[0].text);
+		assertEquals(cells[1].text,t.getCells()[1].text);
+		assertEquals(cells[2].text,t.getCells()[2].text);
 	}
 }

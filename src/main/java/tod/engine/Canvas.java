@@ -1,31 +1,49 @@
 package tod.engine;
-import java.lang.StringBuilder;
 import tod.math.*;
+import tod.objects.Cell;
 
 public class Canvas{
-	char[] buffer;
-	static char initialChar = '';
-	static char[] topLeftFull;
-	static char[] clear;
-	static char[] newFrame;
+	byte[] buffer;
+	Framer framer;
+	Cell[] cells;
 	int rows;
 	int cols;
 
-	public Canvas(char[] _buf){
-		char[] topLeftFull = {'␛', '[', '1', ';', '1', 'H'};
-		char[] clear = {'␛', '[', '2', 'J'};
-		char[] newFrame = { '␛', '[', ';', 'H', };
-		StringBuilder sb = new StringBuilder(64);
-
-		sb.append(topLeftFull);
-		sb.append(clear);
-		sb.append(newFrame);
-
-		char[] foregroundColor = { '␛', '[', '3', '8', ';', '2', ';', };
-		char[] newline = { '\r', '\n', };
-
+	public Canvas(byte[] _buf){
 		buffer = _buf;
+		framer = new Framer();
 		rows = Constants.CANVAS_ROWS;
 		cols = Constants.CANVAS_COLS;
+		cells = new Cell[100];		//TODO: How many cells?
+		resetCells();
+	}
+
+	public void placeCells(Cell[] objectCells, Sized sd){
+		for(int i = 0; i < objectCells.length; i++){
+			int rowOffest = i / sd.getCols();
+			int colOffset = i % sd.getCols();
+
+			Position pos = sd.getPos();
+			int offset = ((pos.getRow() + rowOffest) * cols) + (pos.getCol() + colOffset);
+			if(offset >= cells.length){
+				throw new RuntimeException("Canvas: placeCells: offset out of bounds" + offset + " " + cells.length);
+			}
+			cells[offset] = objectCells[i];
+		}
+	}
+
+	public void render(){
+		framer.frame(cells,buffer);
+		resetCells();
+	}
+
+	public void resetCells(){
+		for(int i = 0; i < cells.length;i++){
+			cells[i] = Constants.EMPTY_CELL;
+		}
+	}
+
+	public Cell[] getCells() {
+		return cells;
 	}
 };

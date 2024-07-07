@@ -1,8 +1,8 @@
 package tod.math;
 
 public class Vec2{
-	float x;
-	float y;
+	public float x;
+	public float y;
 
 	public Vec2(float _x,float _y){
 		x = _x;

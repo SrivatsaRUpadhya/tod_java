@@ -43,7 +43,7 @@ public class Framer{
 			offset = writeByte(out, offset, text);
 
 			if (i % Constants.CANVAS_COLS == 0) {
-				offset = write(out, offset, Constants.clear);
+				offset = write(out, offset, Constants.newline);
 				newLineCount += 1;
 			}
 		}

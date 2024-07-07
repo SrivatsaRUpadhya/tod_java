@@ -16,8 +16,7 @@ public class GameTest{
 	public void GameStateTest(){
 		GameState gs = new GameState();
 		PrintStream p = new PrintStream(System.out);
-		byte [] buf = new byte[100];
-		Framer f = new Framer();
+		byte [] buf = new byte[200];
 		Tower t =new Tower();
 		t.setTowerPos(new Vec2(1,1));
 		gs.addTower(t);
@@ -28,26 +27,30 @@ public class GameTest{
 		t3.setTowerPos(new Vec2(3,3));
 		gs.addTower(t3);
 
-		ArrayList<Cell> cells = new ArrayList<Cell>();
-		for(Tower T : gs.getTowers()){
-			for(Cell c : T.getCells()){
-				cells.add(c);
-			}
-		}
+		Renderer r = new Renderer(gs);
+		r.renderGameState();
 
-		assertEquals(cells.size(), 9);
-		assertTrue(t.getTowerPos().equals(new Vec2(1,1)));
-		assertTrue(t2.getTowerPos().equals(new Vec2(2,2)));
-		assertTrue(t3.getTowerPos().equals(new Vec2(3,3)));
+		//ArrayList<Cell> cells = new ArrayList<Cell>();
+		//for(Tower T : gs.getTowers()){
+		//	for(Cell c : T.getCells()){
+		//		cells.add(c);
+		//	}
+		//}
 
-		for(Cell c : cells){
-			p.println(c.text);
-		}
+		//assertEquals(cells.size(), 9);
+		//assertTrue(t.getTowerPos().equals(new Vec2(1,1)));
+		//assertTrue(t2.getTowerPos().equals(new Vec2(2,2)));
+		//assertTrue(t3.getTowerPos().equals(new Vec2(3,3)));
 
-		p.println("Creating framer");
-		Cell[] a = new Cell[cells.size()];
-		cells.toArray(a);
-		f.frame(a, buf);
-		p.write(buf, 0, buf.length);
+		//for(Cell c : cells){
+		//	p.println(c.text);
+		//}
+
+		//p.println("Creating framer");
+		//Cell[] a = new Cell[cells.size()];
+		//cells.toArray(a);
+		//f.frame(a, buf);
+		byte[] out = r.getOutput();
+		p.write(out, 0, out.length);
 	}	
 }

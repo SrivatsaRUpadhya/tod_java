@@ -49,6 +49,7 @@ public class Tower{
 
 	public void setTowerPos(Vec2 _pos){
 		pos = _pos;
+		rSized = new Sized(3, new Position((int)_pos.x, (int)_pos.y));
 	}
 
 	public boolean isAlive() {
@@ -63,5 +64,8 @@ public class Tower{
 	}
 	public Cell[] getCells(){
 		return rCells;
+	}
+	public Sized getrSized() {
+		return rSized;
 	}
 };

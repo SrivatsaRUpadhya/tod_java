@@ -13,4 +13,11 @@ public class Sized {
 		String res = STR."cols = {\{this.cols}}, pos = {\{this.pos.toString()}}";
 		return res;
 	}
+
+	public int getCols() {
+		return cols;
+	}
+	public Position getPos() {
+		return pos;
+	}
 };
