@@ -32,5 +32,9 @@ public class Vec2{
 	public boolean equals(Vec2 v){
 		return x == v.x && y == v.y;
 	}
+
+	public Position toPosition(){
+		return new Position((int)x,(int)y);
+	}
 }
 
