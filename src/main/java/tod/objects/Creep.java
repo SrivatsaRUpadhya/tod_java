@@ -1,5 +1,8 @@
 package tod.objects;
 import tod.math.Constants;
+
+import java.util.ArrayList;
+
 import tod.math.*;
 
 public class Creep{
@@ -18,7 +21,7 @@ public class Creep{
 	protected Cell[] rCells;
 	protected Sized rSized;
 
-	protected int path;
+	protected int[] path;
 	protected int pathIdx;
 	protected int pathLen;
 
@@ -34,6 +37,15 @@ public class Creep{
 		rColor = Constants.INITIAL_CREEP_COLOR;
 		rSized = new Sized(1, v.toPosition());
 		rCells = new Cell[1];
+		rCells[0] = new Cell((byte)'*',Constants.BLACK_COLOR);
+	}
+
+	public Cell[] getCells() {
+		return rCells;
+	}
+
+	public Sized getrSized() {
+		return rSized;
 	}
 
 	public int walk(int from, int pos, int[] seen,boolean[] board, int boardCols){
@@ -56,18 +68,74 @@ public class Creep{
 		return 0;
 	}
 
-	public int path(int[] seen, int pos, int[] out){
-		int i = 0;	
+	public int getPath(int[] seen, int pos){
+		ArrayList<Integer> out = new ArrayList<Integer>();
 		while(seen[pos] != pos){
-			out[i++] = pos;
+			out.add(pos);
 			pos = seen[pos];
 		}
-
-		for(int j = 0; j < out.length / 2; j++){
-			int temp = out[j];
-			out[j] = out[out.length - j - 1];
-			out[out.length - j - 1] = temp;
+		path = new int[out.size()];
+		int n = out.size();
+		for(int j = n-1; j >= 0; j--){
+			path[n - j - 1] = out.get(j);
 		}
-		return i;
+		pathLen = path.length;
+		pathIdx = 0;
+		return n;
 	}
-};
+
+	public void createPath(boolean[] board){
+		int[] seen = new int[Constants.BOARD_SIZE];
+		for(int i = 0; i < seen.length; i++)
+			seen[i] = -1;
+		
+		int startPos = pos.toPosition().toIdx(Constants.CANVAS_COLS);
+		int finalPos = walk(startPos,startPos,seen,board, Constants.CANVAS_COLS);
+		getPath(seen,finalPos);
+	}
+
+	public int[] getCreepCurrentPath(){
+		return path;
+	}
+	public boolean completed(){
+		return pos.toPosition().getCol() == Constants.CANVAS_COLS - 1;
+	}
+
+	public boolean dead() {
+		return alive;
+	}
+
+	public void update(GameState gs) {
+		if (completed() || !alive) {
+			return;
+		}
+
+		int consumedUS = 0;
+		int MICROSECOND = 1000000;
+		while (consumedUS < gs.loopDeltaUS && !completed()) {
+			int delta = gs.loopDeltaUS - consumedUS;
+
+			Position to = Position.idxToPos(path[pathIdx], Constants.CANVAS_COLS);
+			Vec2 dist = pos.sub(to);
+			Vec2 normDist = dist.norm();
+			int len = (int)dist.length();
+			int maxUS = (len / speed * MICROSECOND);
+			int usConsumed = Math.min(maxUS, delta);
+
+			float deltaF = usConsumed;
+			float deltaP = deltaF / MICROSECOND * speed;
+			Vec2 change = normDist.scale(-deltaP);
+			pos = pos.add(change);
+
+			if (pos.closeEnough(to.getVec2(), 0.001)) {
+				pos = Position.idxToPos(path[pathIdx], Constants.CANVAS_COLS).getVec2();
+				pathIdx += 1;
+			}
+
+			consumedUS += usConsumed;
+		}
+	}
+	public void render(){
+		rSized.setPos(pos.toPosition());
+	}
+}

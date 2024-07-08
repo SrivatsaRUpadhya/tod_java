@@ -17,9 +17,10 @@ public class Vec2{
 		return x * x + y * y;
 	}
 
-	public 	void scale(int scaleVal){
+	public 	Vec2 scale(float scaleVal){
 		x = x * scaleVal;
 		y = y * scaleVal;
+		return this;
 	}
 
 	public Vec2 add(Vec2 vecToAdd){
@@ -29,6 +30,9 @@ public class Vec2{
 	public Vec2 sub(Vec2 vecToSub){
 		return new Vec2(x - vecToSub.x, y - vecToSub.y);
 	}
+	public Vec2 sub(Position p){
+		return new Vec2(x - (float)p.row, y - (float)p.col);
+	}
 	public boolean equals(Vec2 v){
 		return x == v.x && y == v.y;
 	}
@@ -36,5 +40,14 @@ public class Vec2{
 	public Position toPosition(){
 		return new Position((int)x,(int)y);
 	}
+
+	public Vec2 norm(){
+		return new Vec2((float)(x/length()), (float)(y/length()));
+	}
+	public boolean closeEnough(Vec2 b, double enough) {
+		return Math.abs(x - b.x) < enough &&
+			Math.abs(y - b.y) < enough;
+	}
+
 }
 

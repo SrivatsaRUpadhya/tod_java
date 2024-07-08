@@ -16,7 +16,6 @@ public class GameTest{
 	public void GameStateTest(){
 		GameState gs = new GameState();
 		PrintStream p = new PrintStream(System.out);
-		byte [] buf = new byte[200];
 		Tower t =new Tower();
 		t.setTowerPos(new Vec2(1,1));
 		gs.addTower(t);
@@ -26,6 +25,13 @@ public class GameTest{
 		Tower t3 =new Tower();
 		t3.setTowerPos(new Vec2(3,3));
 		gs.addTower(t3);
+
+		Creep c1 = new Creep(new Vec2(3,5),1,1);
+		gs.addCreep(c1);
+		Creep c2 = new Creep(new Vec2(9,5),1,1);
+		gs.addCreep(c2);
+		Creep c3 = new Creep(new Vec2(13,5),1,1);
+		gs.addCreep(c3);
 
 		Renderer r = new Renderer(gs);
 		r.renderGameState();

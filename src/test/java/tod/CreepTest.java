@@ -23,10 +23,23 @@ public class CreepTest{
 		};
 		int finalPos = creep.walk(0,0,seen,testBoard,3);
 		assertEquals(8,finalPos);
-		int[] out = new int[4];
-		creep.path(seen,finalPos,out);
+		creep.getPath(seen,finalPos);
 		int[] expectedPath = {3,6,7,8};
+		int[] out = creep.getCreepCurrentPath();
 		for(int i = 0; i < expectedPath.length;i++)
 			assertEquals(expectedPath[i],out[i]);
+
+		// use following test with CANVAS_COLS constant set to 3
+		//boolean[] emptyBoard = {
+		//	true, true, true,
+		//	true, true, true,
+		//	true, true, true,
+		//};
+		//
+		//creep.createPath(emptyBoard);
+		//int[] expectedPath1 = {1,2};
+		//int[] curPath = creep.getCreepCurrentPath();
+		//for(int i = 0; i < expectedPath1.length;i++)
+		//	assertEquals(expectedPath1[i],curPath[i]);
 	}
 }

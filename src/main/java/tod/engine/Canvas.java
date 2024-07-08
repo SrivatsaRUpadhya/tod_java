@@ -14,7 +14,7 @@ public class Canvas{
 		framer = new Framer();
 		rows = Constants.CANVAS_ROWS;
 		cols = Constants.CANVAS_COLS;
-		cells = new Cell[100];		//TODO: How many cells?
+		cells = new Cell[Constants.BOARD_SIZE];		//TODO: How many cells?
 		resetCells();
 	}
 

@@ -38,7 +38,13 @@ public class GameState{
 	public void addTower(Tower t){
 		towers.add(t);
 	}
+	public void addCreep(Creep c){
+		creeps.add(c);
+	}
 	public ArrayList<Tower> getTowers() {
 		return towers;
+	}
+	public ArrayList<Creep> getCreeps() {
+		return creeps;
 	}
 };

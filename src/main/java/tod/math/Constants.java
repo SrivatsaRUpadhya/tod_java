@@ -8,7 +8,9 @@ public interface Constants{
 	public static final int INITIAL_CREEP_LIFE = 3;
 	public static final int INITIAL_CREEP_SPEED = 3;
 	public static final int CANVAS_ROWS = 80;
-	public static final int CANVAS_COLS = 30;
+	public static final int CANVAS_COLS = 24;
+	public static final int BOARD_SIZE = 24 * 40;
+	public static final boolean[] BOARD = new boolean[BOARD_SIZE];
 	public static final Color INITIAL_CREEP_COLOR = new Color(255,255,255);
 	public static final Color BLACK_COLOR = new Color(0,0,0);
 	public static final Vec2 ZERO_VEC2 = new Vec2(0,0);

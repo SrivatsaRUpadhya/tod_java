@@ -9,7 +9,7 @@ public class Position{
 		col = _col;
 	}
 
-	Position(String str) throws Exception{
+	public Position(String str) throws Exception{
 		final int index = str.indexOf(",");
 		if (index == -1) {
 			throw new Exception("Invalid input str");
@@ -28,23 +28,23 @@ public class Position{
 		;
 	}
 
-	Vec2 getVec2(){
+	public Vec2 getVec2(){
 		return new Vec2((float)row,(float)col);
 	}
 
-	boolean equals(Position p){
+	public boolean equals(Position p){
 		return this.row == p.row && this.col == p.col;
 	}
 
-	int toIdx(int cols){
+	public int toIdx(int cols){
 		return this.row * cols + this.col;
 	}
 
-	static Position idxToPos(int idx, int cols){
+	public static Position idxToPos(int idx, int cols){
 		return new Position(idx/cols,idx%cols);
 	}
 
-	String to_string(){
+	public String to_string(){
 		String res = STR."vec(r = {\{this.row}}, c = {\{this.col}})";
 		return res;
 	}
