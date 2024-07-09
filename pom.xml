@@ -88,7 +88,7 @@
 		<manifest>
 		<addClasspath>true</addClasspath>
 		<!-- here we specify that we want to use the main method within the App class -->
-		<mainClass>tod.App</mainClass>
+		<mainClass>tod.Sim</mainClass>
 		</manifest>
 		</archive>
 		</configuration>

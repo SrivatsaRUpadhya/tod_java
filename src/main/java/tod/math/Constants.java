@@ -5,11 +5,11 @@ public interface Constants{
 	public static final int INITIAL_AMMO = 150; 
 	public static final int INITIAL_FIRERATE_MS = 1000;
 	public static final int INITIAL_PROJECTILE_SPEED = 0;
-	public static final int INITIAL_CREEP_LIFE = 3;
-	public static final int INITIAL_CREEP_SPEED = 3;
-	public static final int CANVAS_ROWS = 80;
-	public static final int CANVAS_COLS = 24;
-	public static final int BOARD_SIZE = 24 * 40;
+	public static final int INITIAL_CREEP_LIFE = 10;
+	public static final int INITIAL_CREEP_SPEED = 1;
+	public static final int CANVAS_ROWS = 30;
+	public static final int CANVAS_COLS = 80;
+	public static final int BOARD_SIZE = CANVAS_ROWS*CANVAS_COLS;
 	public static final boolean[] BOARD = new boolean[BOARD_SIZE];
 	public static final Color INITIAL_CREEP_COLOR = new Color(255,255,255);
 	public static final Color BLACK_COLOR = new Color(0,0,0);

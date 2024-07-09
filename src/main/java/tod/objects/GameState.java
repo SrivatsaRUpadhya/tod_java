@@ -1,6 +1,9 @@
 package tod.objects;
 import java.util.ArrayList;
 
+import tod.math.Constants;
+import tod.math.Position;
+
 public class GameState{
 	protected boolean playing;
 	protected int round;
@@ -25,7 +28,7 @@ public class GameState{
 		rows = 0;
 		cols = 0;
 		time = 0;
-		loopDeltaUS = 0;
+		loopDeltaUS = 16000;
 		updates = 0;
 		towers = new ArrayList<Tower>();
 		creeps = new ArrayList<Creep>();
@@ -46,5 +49,24 @@ public class GameState{
 	}
 	public ArrayList<Creep> getCreeps() {
 		return creeps;
+	}
+	public boolean canPlaceTower(Position pos) {
+		if (pos.getCol() == 0  || pos.getCol() == Constants.CANVAS_COLS- 1) {
+			return false;
+		}
+
+		for(int i = 0; i < towers.size(); i++){
+			if(towers.get(i).getTowerPos().toPosition().equals(pos)){
+				return false;
+			}
+		}
+
+		for(int i = 0; i < creeps.size(); i++){
+			if(creeps.get(i).getPos().toPosition().equals(pos)){
+				return false;
+			}
+		}
+
+		return true;
 	}
 };

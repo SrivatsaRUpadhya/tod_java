@@ -111,31 +111,36 @@ public class Creep{
 		}
 
 		int consumedUS = 0;
-		int MICROSECOND = 1000000;
+		double MICROSECOND = 1000000.0;
 		while (consumedUS < gs.loopDeltaUS && !completed()) {
 			int delta = gs.loopDeltaUS - consumedUS;
 
 			Position to = Position.idxToPos(path[pathIdx], Constants.CANVAS_COLS);
 			Vec2 dist = pos.sub(to);
 			Vec2 normDist = dist.norm();
-			int len = (int)dist.length();
-			int maxUS = (len / speed * MICROSECOND);
+			double len = dist.length();
+			int maxUS = (int)(len / (double)speed * MICROSECOND);
 			int usConsumed = Math.min(maxUS, delta);
 
 			float deltaF = usConsumed;
-			float deltaP = deltaF / MICROSECOND * speed;
-			Vec2 change = normDist.scale(-deltaP);
+			double deltaP = deltaF / MICROSECOND * speed;
+			Vec2 change = normDist.scale((float)-deltaP);
 			pos = pos.add(change);
 
-			if (pos.closeEnough(to.getVec2(), 0.001)) {
+			//TODO: check close enough value
+			if (pos.closeEnough(to.getVec2(), 1)) {
 				pos = Position.idxToPos(path[pathIdx], Constants.CANVAS_COLS).getVec2();
 				pathIdx += 1;
 			}
 
 			consumedUS += usConsumed;
+			//System.out.println(consumedUS);
 		}
 	}
 	public void render(){
 		rSized.setPos(pos.toPosition());
+	}
+	public Vec2 getPos() {
+		return pos;
 	}
 }

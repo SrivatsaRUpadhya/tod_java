@@ -18,9 +18,10 @@ public class Vec2{
 	}
 
 	public 	Vec2 scale(float scaleVal){
-		x = x * scaleVal;
-		y = y * scaleVal;
-		return this;
+		return new Vec2(
+		x * scaleVal,
+		y * scaleVal
+		);
 	}
 
 	public Vec2 add(Vec2 vecToAdd){
