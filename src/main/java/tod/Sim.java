@@ -37,6 +37,7 @@ public class Sim{
 					Tower t = new Tower();
 					t.setTowerPos(pos);
 					gs.addTower(t);
+					board[pos.toPosition().toIdx(Constants.CANVAS_COLS)] = false;
 					break;
 				}
 			}
@@ -65,7 +66,7 @@ public class Sim{
 		long start = System.currentTimeMillis();
 		boolean firstRender = true;
 		while(runCount != 0 ){
-			while(System.currentTimeMillis() - start > 1000){
+			while(System.currentTimeMillis() - start > 17){
 				start = System.currentTimeMillis();
 				if(firstRender){
 					firstRender = false;
@@ -76,7 +77,6 @@ public class Sim{
 						Creep temp = gameCreeps.get(i);
 						String prev = temp.getPos().toPosition().to_string();
 						temp.update(gs);
-						temp.render();
 						String after = temp.getPos().toPosition().to_string();
 						//if(!prev.equals(after))
 						//	System.out.println("Creep moved from: " + prev + " to: " + after);

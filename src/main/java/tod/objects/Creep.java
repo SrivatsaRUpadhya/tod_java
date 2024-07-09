@@ -128,9 +128,10 @@ public class Creep{
 			pos = pos.add(change);
 
 			//TODO: check close enough value
-			if (pos.closeEnough(to.getVec2(), 1)) {
+			if (pos.closeEnough(to.getVec2(), 0.01)) {
 				pos = Position.idxToPos(path[pathIdx], Constants.CANVAS_COLS).getVec2();
 				pathIdx += 1;
+				render();
 			}
 
 			consumedUS += usConsumed;

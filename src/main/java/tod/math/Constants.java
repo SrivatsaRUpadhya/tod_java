@@ -2,7 +2,7 @@ package tod.math;
 import tod.objects.*;
 
 public interface Constants{
-	public static final int INITIAL_AMMO = 150; 
+	public static final int INITIAL_AMMO = 150;
 	public static final int INITIAL_FIRERATE_MS = 1000;
 	public static final int INITIAL_PROJECTILE_SPEED = 0;
 	public static final int INITIAL_CREEP_LIFE = 10;
