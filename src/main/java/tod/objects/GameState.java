@@ -67,14 +67,11 @@ public class GameState{
 			int rowPerTeam = (Constants.CANVAS_ROWS - Constants.NO_BUILD_ROW_COUNT) / 2;
 			int noBuildBegin = rowPerTeam * Constants.CANVAS_COLS;
 			int noBuildEnd = noBuildBegin + Constants.NO_BUILD_ZONE_SIZE;
-			System.out.println("idx: " + idx);
-			System.out.println("begin: " + noBuildBegin);
-			System.out.println("end: " + noBuildEnd);
-			return  idx < noBuildBegin || idx > noBuildEnd;
+			if(idx > noBuildBegin && idx < noBuildEnd) return false;
 		}
 
 		for(int i = 0; i < towers.size(); i++){
-			if(towers.get(i).getTowerPos().toPosition().equals(pos)){
+			if(towers.get(i).getTowAABB().contains(pos.getVec2())){
 				return false;
 			}
 		}

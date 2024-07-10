@@ -50,6 +50,7 @@ public class Tower{
 	public void setTowerPos(Vec2 _pos){
 		pos = _pos;
 		rSized = new Sized(3, new Position((int)_pos.x, (int)_pos.y));
+		towAABB = new AABB(_pos.sub(new Vec2(1,3)), _pos.add(new Vec2(1, 3)));
 	}
 
 	public boolean isAlive() {
@@ -67,5 +68,8 @@ public class Tower{
 	}
 	public Sized getrSized() {
 		return rSized;
+	}
+	public AABB getTowAABB() {
+		return towAABB;
 	}
 };
