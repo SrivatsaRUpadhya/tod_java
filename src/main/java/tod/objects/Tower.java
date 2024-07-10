@@ -35,7 +35,7 @@ public class Tower{
 		fired = false;
 		rAmmo = 0;
 
-		Color TowerColor = new Color(0,0,0);
+		Color TowerColor = Constants.WHITE_COLOR;
 
 		rCells = new Cell[3];
 		rCells[0] = new Cell((byte)'/', TowerColor);

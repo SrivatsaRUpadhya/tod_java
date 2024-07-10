@@ -34,10 +34,10 @@ public class Creep{
 		alive = true;
 
 		rLife = Constants.INITIAL_CREEP_LIFE;
-		rColor = Constants.INITIAL_CREEP_COLOR;
+		rColor = Constants.RED_COLOR;
 		rSized = new Sized(1, v.toPosition());
 		rCells = new Cell[1];
-		rCells[0] = new Cell((byte)'*',Constants.BLACK_COLOR);
+		rCells[0] = new Cell((byte)'*',new Color(255,0,0));
 	}
 
 	public Cell[] getCells() {

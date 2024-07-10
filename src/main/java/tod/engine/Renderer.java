@@ -15,7 +15,7 @@ public class Renderer{
 
 	public Renderer(GameState _gs){
 		gs = _gs;
-		output = new byte[Constants.BOARD_SIZE+400];			//TODO: how much should be the size of the buffer?
+		output = new byte[65535];			//TODO: how much should be the size of the buffer?
 		renderCount = 0;
 		canvas = new Canvas(output);
 	};
@@ -26,10 +26,9 @@ public class Renderer{
 			int noBuildBegin = (rowPerTeam * Constants.CANVAS_COLS) + 1;
 			int noBuildEnd = noBuildBegin + Constants.NO_BUILD_ZONE_SIZE;
 
-			Cell noBuildZoneCell = new Cell((byte)'0',Constants.BLACK_COLOR);
 			Cell[] cells= new Cell[1];
 			for(int i = noBuildBegin; i < noBuildEnd;i++){
-				cells[0] = noBuildZoneCell;
+				cells[0] = Constants.NO_BUILD_ZONE_CELL;
 				canvas.placeCells(cells, new Sized(1,Position.idxToPos(i,Constants.CANVAS_COLS)));
 			}
 		}

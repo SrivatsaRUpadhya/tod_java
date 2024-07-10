@@ -1,9 +1,14 @@
 package tod.engine;
 
+import java.io.IOException;
+import java.util.Arrays;
+
 import tod.math.*;
 import tod.objects.*;
 
 public class Framer{
+	Color currentColor = new Color(255,255,255);
+	byte[] colorOut;
 	boolean isFirstRender = true;
 	int size = 100;
 
@@ -35,11 +40,27 @@ public class Framer{
 		for(int i = 0; i<f.length; i++){
 			byte text = f[i].text;
 
+			if(!f[i].color.equals(currentColor)){
+				currentColor = f[i].color;
+				int len = Constants.foregroundColor.length + 12;
+				byte[] colorHolder = new byte[len];
+				int j = 0;
+				for(j = 0; j < Constants.foregroundColor.length; j++){
+						colorHolder[j] = Constants.foregroundColor[j];
+				}
+				int count = 0;
+				char[] rgb = currentColor.getRGBArray();
+				for(char c : rgb){
+					colorHolder[j++] = (byte)c;
+				}
+				colorOut = colorHolder;
+			}
 			//if (!self.previous.equal(c.color)) {
 			//	self.previous = c.color;
 			//	offset = try writeAnsiColor(c.color, out, offset);
-			//}
+			
 
+			offset = write(out, offset,colorOut);
 			offset = writeByte(out, offset, text);
 
 			if (i % Constants.CANVAS_COLS == 0) {
