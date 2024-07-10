@@ -1,6 +1,8 @@
 package tod.engine;
-
 import tod.math.Constants;
+import tod.math.Position;
+import tod.math.Sized;
+import tod.objects.Cell;
 import tod.objects.Creep;
 import tod.objects.GameState;
 import tod.objects.Tower;
@@ -18,7 +20,20 @@ public class Renderer{
 		canvas = new Canvas(output);
 	};
 
-	public void renderGameState(){
+	public void renderGameState(GameState gs){
+		if(gs.isNoBuildZone()){
+			int rowPerTeam = (Constants.CANVAS_ROWS - Constants.NO_BUILD_ROW_COUNT) / 2;
+			int noBuildBegin = (rowPerTeam * Constants.CANVAS_COLS) + 1;
+			int noBuildEnd = noBuildBegin + Constants.NO_BUILD_ZONE_SIZE;
+
+			Cell noBuildZoneCell = new Cell((byte)'0',Constants.BLACK_COLOR);
+			Cell[] cells= new Cell[1];
+			for(int i = noBuildBegin; i < noBuildEnd;i++){
+				cells[0] = noBuildZoneCell;
+				canvas.placeCells(cells, new Sized(1,Position.idxToPos(i,Constants.CANVAS_COLS)));
+			}
+		}
+
 		for(Tower t : gs.getTowers()){
 			canvas.placeCells(t.getCells(), t.getrSized());
 		}

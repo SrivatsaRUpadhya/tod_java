@@ -11,6 +11,8 @@ public class GameState{
 	protected int two;
 	protected int rows;
 	protected int cols;
+	protected boolean noBuildZone;
+	protected boolean[] board;
 
 	protected int time;
 	protected int loopDeltaUS;
@@ -28,8 +30,12 @@ public class GameState{
 		rows = 0;
 		cols = 0;
 		time = 0;
+		noBuildZone = true;
 		loopDeltaUS = 16000;
 		updates = 0;
+		board = new boolean[Constants.BOARD_SIZE];
+		for(int i = 0; i < Constants.BOARD_SIZE;i++)
+			board[i] = true;
 		towers = new ArrayList<Tower>();
 		creeps = new ArrayList<Creep>();
 		projectile = new ArrayList<Projectile>();
@@ -40,6 +46,7 @@ public class GameState{
 	}
 	public void addTower(Tower t){
 		towers.add(t);
+		board[t.getTowerPos().toPosition().toIdx(Constants.CANVAS_COLS)] = false;
 	}
 	public void addCreep(Creep c){
 		creeps.add(c);
@@ -55,6 +62,17 @@ public class GameState{
 			return false;
 		}
 
+		if(noBuildZone){
+			int idx = pos.toIdx(Constants.CANVAS_COLS);
+			int rowPerTeam = (Constants.CANVAS_ROWS - Constants.NO_BUILD_ROW_COUNT) / 2;
+			int noBuildBegin = rowPerTeam * Constants.CANVAS_COLS;
+			int noBuildEnd = noBuildBegin + Constants.NO_BUILD_ZONE_SIZE;
+			System.out.println("idx: " + idx);
+			System.out.println("begin: " + noBuildBegin);
+			System.out.println("end: " + noBuildEnd);
+			return  idx < noBuildBegin || idx > noBuildEnd;
+		}
+
 		for(int i = 0; i < towers.size(); i++){
 			if(towers.get(i).getTowerPos().toPosition().equals(pos)){
 				return false;
@@ -68,5 +86,16 @@ public class GameState{
 		}
 
 		return true;
+	}
+	public boolean[] getBoard() {
+		return board;
+	}
+
+	public boolean isNoBuildZone() {
+		return noBuildZone;
+	}
+
+	public void setNoBuildZone(boolean noBuildZone) {
+		this.noBuildZone = noBuildZone;
 	}
 };

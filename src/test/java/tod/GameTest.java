@@ -18,6 +18,7 @@ public class GameTest{
 		PrintStream p = new PrintStream(System.out);
 		Tower t =new Tower();
 		t.setTowerPos(new Vec2(1,1));
+		assertTrue(gs.canPlaceTower(t.getTowerPos().toPosition()));
 		gs.addTower(t);
 		Tower t2 =new Tower();
 		t2.setTowerPos(new Vec2(2,2));
@@ -34,7 +35,7 @@ public class GameTest{
 		gs.addCreep(c3);
 
 		Renderer r = new Renderer(gs);
-		r.renderGameState();
+		r.renderGameState(gs);
 
 		//ArrayList<Cell> cells = new ArrayList<Cell>();
 		//for(Tower T : gs.getTowers()){

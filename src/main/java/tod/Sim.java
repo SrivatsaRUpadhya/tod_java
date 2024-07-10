@@ -24,20 +24,16 @@ public class Sim{
 
 		GameState gs = new GameState();
 		Random r = new Random();
-		boolean[] board = new boolean[Constants.BOARD_SIZE];
-		for(int i = 0; i < Constants.BOARD_SIZE; i++)
-			board[i] = true;
 		for(int i = 0; i < towerCount; i++){
 			while(true){
 				int row = r.nextInt(Constants.CANVAS_ROWS) ;
 				int col = r.nextInt(Constants.CANVAS_COLS) ;
-				Vec2 pos = new Vec2(row%Constants.CANVAS_ROWS,col%Constants.CANVAS_COLS);
+				Vec2 pos = new Vec2(row,col);
 				System.out.println("Trying to place tower at: " + pos.toPosition().to_string());
 				if(gs.canPlaceTower(pos.toPosition())){
 					Tower t = new Tower();
 					t.setTowerPos(pos);
 					gs.addTower(t);
-					board[pos.toPosition().toIdx(Constants.CANVAS_COLS)] = false;
 					break;
 				}
 			}
@@ -46,12 +42,12 @@ public class Sim{
 			while(true){
 				int row = r.nextInt(Constants.CANVAS_ROWS) ;
 				int col = r.nextInt(Constants.CANVAS_COLS) ;
-				Vec2 pos = new Vec2(row%Constants.CANVAS_ROWS,col%Constants.CANVAS_COLS);
+				Vec2 pos = new Vec2(row,col);
 				System.out.println("Trying to place creep at: " + pos.toPosition().to_string());
 				//TODO: Change canPlaceTower to canPlaceCreep
 				if(gs.canPlaceTower(pos.toPosition())){
 					Creep c = new Creep(pos,1,1);
-					c.createPath(board);
+					c.createPath(gs.getBoard());
 					gs.addCreep(c);
 					break;
 				}
@@ -65,7 +61,10 @@ public class Sim{
 
 		long start = System.currentTimeMillis();
 		boolean firstRender = true;
-		while(runCount != 0 ){
+		//int countToDisableNoBuild = runCount - 100;
+		while(runCount != 0){
+			//if(runCount == countToDisableNoBuild)
+			//	gs.setNoBuildZone(false);
 			while(System.currentTimeMillis() - start > 17){
 				start = System.currentTimeMillis();
 				if(firstRender){
@@ -83,7 +82,7 @@ public class Sim{
 						gameCreeps.set(i, temp);
 					}
 				}
-				renderer.renderGameState();
+				renderer.renderGameState(gs);
 				byte[] output = renderer.getOutput();
 				ps.write(output,0,output.length);
 				runCount--;
