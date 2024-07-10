@@ -41,24 +41,12 @@ public class Framer{
 			byte text = f[i].text;
 
 			if(!f[i].color.equals(currentColor)){
-				currentColor = f[i].color;
-				int len = Constants.foregroundColor.length + 12;
-				byte[] colorHolder = new byte[len];
-				int j = 0;
-				for(j = 0; j < Constants.foregroundColor.length; j++){
-						colorHolder[j] = Constants.foregroundColor[j];
-				}
-				int count = 0;
-				char[] rgb = currentColor.getRGBArray();
-				for(char c : rgb){
-					colorHolder[j++] = (byte)c;
-				}
-				colorOut = colorHolder;
+				setOutColor(f[i].color);
 			}
 			//if (!self.previous.equal(c.color)) {
 			//	self.previous = c.color;
 			//	offset = try writeAnsiColor(c.color, out, offset);
-			
+
 
 			offset = write(out, offset,colorOut);
 			offset = writeByte(out, offset, text);
@@ -67,9 +55,25 @@ public class Framer{
 				offset = write(out, offset, Constants.newline);
 				newLineCount += 1;
 			}
-		}
+			}
 
 		//assert(newLineCount == Constants.CANVAS_ROWS, "should have produced self.rows amount of rows, did not");
 		return offset;
-	}
-};
+		}
+
+		public void setOutColor(Color objColor){
+			currentColor = objColor;
+			int len = Constants.foregroundColor.length + 12;
+			byte[] colorHolder = new byte[len];
+			int j = 0;
+			for(j = 0; j < Constants.foregroundColor.length; j++){
+				colorHolder[j] = Constants.foregroundColor[j];
+			}
+			int count = 0;
+			char[] rgb = currentColor.getRGBArray();
+			for(char c : rgb){
+				colorHolder[j++] = (byte)c;
+			}
+			colorOut = colorHolder;
+		}
+	};
